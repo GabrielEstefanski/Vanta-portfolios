@@ -1,3 +1,5 @@
+import { Button } from '@/app/components/ui/Button';
+
 export default function TemplatesShowcase() {
   const templates = [
     {
@@ -20,7 +22,7 @@ export default function TemplatesShowcase() {
       features: ["Layout multi-coluna", "Timeline de projetos", "Seção de skills", "Integração com LinkedIn"],
       image: "/templates/professional.png",
       color: "from-purple-900 to-black"
-    }
+    },
   ];
 
   return (
@@ -33,6 +35,32 @@ export default function TemplatesShowcase() {
           <p className="text-gray-400 max-w-2xl mx-auto tracking-wider">
             Escolha entre diferentes estilos e layouts para criar um portfólio que reflita sua identidade profissional
           </p>
+        </div>
+  
+        <div className="mb-24">
+          <div className="relative bg-black/50 backdrop-blur-sm border border-white/5 rounded-lg overflow-hidden group hover:border-white/10 transition-all duration-500">
+            <div className="relative h-96 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-900 opacity-50" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:32px_32px]" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                <span className="text-6xl font-extrabold tracking-tight text-white mb-4">
+                  VANTA
+                </span>
+                <p className="text-xl text-gray-300 tracking-wider max-w-2xl mb-6">
+                  Para aqueles que abraçam a elegância da escuridão
+                </p>
+                <div className="flex flex-wrap justify-center gap-4 mb-8">
+                  <span className="px-4 py-2 bg-white/5 rounded-full text-sm text-gray-300 tracking-wider">Design Minimalista</span>
+                  <span className="px-4 py-2 bg-white/5 rounded-full text-sm text-gray-300 tracking-wider">Tema Escuro</span>
+                  <span className="px-4 py-2 bg-white/5 rounded-full text-sm text-gray-300 tracking-wider">Animações Sutis</span>
+                  <span className="px-4 py-2 bg-white/5 rounded-full text-sm text-gray-300 tracking-wider">Responsivo</span>
+                </div>
+                <button className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white text-sm rounded transition-all duration-200 tracking-wider group-hover:scale-105">
+                  Explorar Template Vanta
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -66,18 +94,24 @@ export default function TemplatesShowcase() {
                   ))}
                 </ul>
 
-                <button className="w-full bg-white/5 hover:bg-white/10 text-white text-sm py-2 rounded transition-all duration-200 tracking-wider">
+                <Button 
+                  variant="outline" 
+                  className="w-full bg-white/5 hover:bg-white/10 text-white text-sm py-2 tracking-wider"
+                >
                   Visualizar Template
-                </button>
+                </Button>
               </div>
             </div>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-white text-black font-medium px-8 py-3 text-sm tracking-wider hover:bg-gray-100 transition-all duration-200">
+          <Button 
+            variant="white"
+            className="px-8 py-3 text-sm tracking-wider hover:bg-gray-300"
+          >
             VER TODOS OS TEMPLATES
-          </button>
+          </Button>
         </div>
       </div>
     </section>

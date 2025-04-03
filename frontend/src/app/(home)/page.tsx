@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import VantaEffect from './components/VantaEffect';
+import VantaEffect from '../components/ui/VantaEffect';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import Features from './components/Features';
 import TemplatesShowcase from './components/TemplatesShowcase';
+import CallToAction from './components/CallToAction';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -25,6 +25,8 @@ export default function Home() {
         <Features />
         <TemplatesShowcase />
       </div>
+
+      <CallToAction />
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(10)].map((_, i) => (
