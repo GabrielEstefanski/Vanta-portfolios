@@ -833,7 +833,6 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
   );
 };
 
-// Componente de Skills com estilo Hyperion
 const SkillsSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
@@ -869,7 +868,6 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
   
   return (
     <section className="py-16 relative">
-      {/* Forma decorativa angular */}
       <div className="absolute -top-10 right-1/3 w-24 h-24 opacity-10 transform rotate-45"
         style={{ 
           border: `2px solid ${colors.secondary}`,
@@ -1155,7 +1153,6 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
                 clipPath: 'polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%)'
               }}
             >
-              {/* Detalhes angulares */}
               <div 
                 className="absolute top-0 right-0 w-10 h-10 opacity-30"
                 style={{ 
@@ -1175,7 +1172,6 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
                 {edu.description}
               </p>
               
-              {/* Indicador decorativo */}
               <div 
                 className="absolute -bottom-px right-0 w-1/3 h-px opacity-50"
                 style={{ 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { TemplateConfig, PortfolioData } from "@/app/types/TemplateConfig";
+import { TemplateConfig } from "@/app/types/TemplateConfig";
 import PreviewLayout from "./layout";
 import { minimalistConfig } from "@/app/config/templates/minimalist";
 import { TemplatePreview } from "./components/TemplatePreview";
-import { defaultConfigs, getTemplateById } from "@/app/config/templates";
-import { TemplateEditor } from "./components/templates/components/Editor/TemplateEditor";
+import { getTemplateById } from "@/app/config/templates";
+import { TemplateEditor } from "./components/Editor/Components/sections/TemplateEditor";
 import { Button } from "@/app/components/ui/Button";
 
 export default function PreviewPortfolioPage() {
@@ -61,52 +61,54 @@ export default function PreviewPortfolioPage() {
       onTemplateSelect={handleTemplateSelect}
       selectedTemplate={config}
     >
-      <div className={`flex h-full transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <div className="flex-1 relative bg-gradient-to-br from-gray-900 to-black overflow-auto">
-          <div className="absolute inset-0 w-full h-full">
-            {mounted && <TemplatePreview config={config} />}
-          </div>
-        </div>
+      <main className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+        <div className="relative h-full flex transition-all duration-1000 w-full">
 
-        <div 
-          className={`w-[400px] bg-black/60 backdrop-blur-xl border-l border-white/10 transition-all duration-300 ease-in-out ${
-            showEditor ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          {mounted && (
-            <TemplateEditor 
-              config={config}
-              onTemplateSelect={handleTemplateSelect}
-              onConfigUpdate={setConfig}
-              onSave={handleSave}
-            />
-          )}
-        </div>
-        
-        <div
-          className="absolute right-0 top-20 z-10"
-          style={{
-            transform: showEditor ? 'translateX(-400px)' : 'translateX(0)',
-            transition: 'transform 0.3s ease-in-out'
-          }}
-        >
-          <Button
-            onClick={() => setShowEditor(!showEditor)}
-            variant="black"
-            className="p-2 rounded-l-md"
+          <div 
+            className={`h-screen overflow-auto transition-all duration-300 ${
+              showEditor ? 'w-[calc(100%-450px)]' : 'w-full'
+            }`}
           >
-            {showEditor ? 
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            {mounted && (
+              <div className={`transition-opacity duration-1000 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
+                <TemplatePreview config={config} />
+              </div>
+            )}
+          </div>
+
+          <div 
+            className={`w-[450px] h-screen bg-black/80 backdrop-blur-xl border-l border-white/10 transition-all duration-300 ease-in-out absolute right-0 ${
+              showEditor ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            {mounted && (
+              <TemplateEditor 
+                config={config}
+                onConfigUpdate={setConfig}
+                onSave={handleSave}
+              />
+            )}
+          </div>
+
+          <button
+            onClick={() => setShowEditor(!showEditor)}
+            className={`fixed top-24 z-20 transition-all duration-300 p-3 bg-black/60 rounded-l-lg shadow-lg border border-white/10 backdrop-blur-sm ${
+              showEditor ? 'right-[450px]' : 'right-0'
+            }`}
+            aria-label="Toggle editor panel"
+          >
+            {showEditor ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
-             : 
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
-            }
-          </Button>
+            )}
+          </button>
         </div>
-      </div>
+      </main>
     </PreviewLayout>
   );
 }

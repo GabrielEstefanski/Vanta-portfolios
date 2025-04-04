@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { TemplateConfig, PortfolioData } from '@/app/types/TemplateConfig';
 import { defaultConfigs } from '@/app/config/templates';
+import { ProfileEditor } from './Components/sections/ProfileEditor';
+import { SocialEditor } from './Components/sections/SocialEditor';
+import { SectionsEditor } from './Components/sections/SectionsEditor';
 
 interface EditorPanelProps {
   data: any;
@@ -12,7 +15,7 @@ interface EditorPanelProps {
 }
 
 export function EditorPanel({ data, setData, config, setConfig }: EditorPanelProps) {
-  const [activeTab, setActiveTab] = useState<'template' | 'style' | 'content'>('template');
+  const [activeTab, setActiveTab] = useState<'template' | 'style' | 'content' | 'profile' | 'social' | 'sections'>('template');
 
   const getColorLabel = (key: string): string => {
     const colorLabels: Record<string, string> = {
@@ -80,7 +83,44 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
     });
   };
 
-  // Opções de layout
+  const handleSectionToggle = (sectionId: string) => {
+    const updatedSections = {...config.props.sections};
+    
+    updatedSections[sectionId] = {
+      ...updatedSections[sectionId],
+      enabled: !updatedSections[sectionId].enabled
+    };
+    
+    setConfig({
+      ...config,
+      props: {
+        ...config.props,
+        sections: updatedSections
+      }
+    });
+  };
+
+  const handleReorderSections = (newOrder: string[]) => {
+    const updatedSections = {...config.props.sections};
+    
+    newOrder.forEach((sectionId, index) => {
+      if (updatedSections[sectionId]) {
+        updatedSections[sectionId] = {
+          ...updatedSections[sectionId],
+          order: index
+        };
+      }
+    });
+    
+    setConfig({
+      ...config,
+      props: {
+        ...config.props,
+        sections: updatedSections
+      }
+    });
+  };
+
   const layoutOptions = {
     maxWidth: [
       { value: '3xl', label: 'Pequeno (768px)' },
@@ -100,7 +140,6 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
     ]
   };
 
-  // Opções de tipografia
   const typographyOptions = {
     headingFont: [
       { value: 'font-light', label: 'Light' },
@@ -123,14 +162,12 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
 
   return (
     <div className="w-[400px] h-full bg-black/60 backdrop-blur-lg border-l border-white/10 overflow-hidden flex flex-col">
-      {/* Cabeçalho do Editor */}
       <div className="p-4 border-b border-white/10">
         <h2 className="text-xl font-light tracking-wider text-white">
           Personalizar Template
         </h2>
       </div>
 
-      {/* Tabs de navegação */}
       <div className="flex border-b border-white/10">
         <button
           onClick={() => setActiveTab('template')}
@@ -143,6 +180,26 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
           Template
         </button>
         <button
+          onClick={() => setActiveTab('profile')}
+          className={`flex-1 py-3 text-sm font-light tracking-wider transition-colors ${
+            activeTab === 'profile'
+              ? 'text-white border-b-2 border-purple-500'
+              : 'text-white/60 hover:text-white'
+          }`}
+        >
+          Perfil
+        </button>
+        <button
+          onClick={() => setActiveTab('social')}
+          className={`flex-1 py-3 text-sm font-light tracking-wider transition-colors ${
+            activeTab === 'social'
+              ? 'text-white border-b-2 border-purple-500'
+              : 'text-white/60 hover:text-white'
+          }`}
+        >
+          Social
+        </button>
+        <button
           onClick={() => setActiveTab('style')}
           className={`flex-1 py-3 text-sm font-light tracking-wider transition-colors ${
             activeTab === 'style'
@@ -151,6 +208,16 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
           }`}
         >
           Estilo
+        </button>
+        <button
+          onClick={() => setActiveTab('sections')}
+          className={`flex-1 py-3 text-sm font-light tracking-wider transition-colors ${
+            activeTab === 'sections'
+              ? 'text-white border-b-2 border-purple-500'
+              : 'text-white/60 hover:text-white'
+          }`}
+        >
+          Seções
         </button>
         <button
           onClick={() => setActiveTab('content')}
@@ -164,7 +231,6 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
         </button>
       </div>
 
-      {/* Conteúdo do Editor baseado na tab ativa */}
       <div className="flex-1 overflow-y-auto custom-scrollbar">
         {activeTab === 'template' && (
           <div className="p-6 space-y-6">
@@ -199,9 +265,20 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
           </div>
         )}
 
+        {activeTab === 'profile' && (
+          <div className="p-6 space-y-6">
+            <ProfileEditor data={data} onUpdate={setData} />
+          </div>
+        )}
+
+        {activeTab === 'social' && (
+          <div className="p-6 space-y-6">
+            <SocialEditor data={data} onUpdate={setData} />
+          </div>
+        )}
+
         {activeTab === 'style' && (
           <div className="p-6 space-y-8">
-            {/* Seção de Cores */}
             <section>
               <h3 className="text-lg font-light tracking-wider text-white mb-4">
                 Cores
@@ -237,7 +314,6 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
               </div>
             </section>
 
-            {/* Seção de Layout */}
             <section>
               <h3 className="text-lg font-light tracking-wider text-white mb-4">
                 Layout
@@ -273,7 +349,6 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
               </div>
             </section>
 
-            {/* Seção de Tipografia */}
             <section>
               <h3 className="text-lg font-light tracking-wider text-white mb-4">
                 Tipografia
@@ -308,6 +383,16 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
                 ))}
               </div>
             </section>
+          </div>
+        )}
+
+        {activeTab === 'sections' && (
+          <div className="p-6 space-y-6">
+            <SectionsEditor 
+              sections={config.props.sections} 
+              onSectionToggle={handleSectionToggle}
+              onReorderSections={handleReorderSections}
+            />
           </div>
         )}
 
@@ -354,7 +439,6 @@ export function EditorPanel({ data, setData, config, setConfig }: EditorPanelPro
         )}
       </div>
 
-      {/* Botões de ação */}
       <div className="p-4 border-t border-white/10 flex justify-between">
         <button
           onClick={() => {

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { TemplateConfig } from '@/app/types/TemplateConfig';
+import { CustomSections } from '../common/CustomSections';
 
 interface VantaTemplateProps {
   config: TemplateConfig;
@@ -11,7 +12,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
   const bgRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Efeito de movimento suave com o mouse
     const handleMouseMove = (e: MouseEvent) => {
       if (bgRef.current) {
         const x = e.clientX / window.innerWidth * 15;
@@ -51,6 +51,16 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         return <EducationSection config={config} key={sectionId} />;
       case 'contact':
         return <ContactSection config={config} key={sectionId} />;
+      case 'custom':
+        return data?.customSections && Array.isArray(data.customSections) && data.customSections.length > 0 ? (
+          <section className="py-20" key={sectionId}>
+            <CustomSections 
+              sections={data.customSections} 
+              className=""
+              config={config}
+            />
+          </section>
+        ) : null;
       default:
         return null;
     }
@@ -71,7 +81,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         backgroundImage: `radial-gradient(circle at 10% 20%, ${colors.primary}08, transparent 35%)`,
       }}
     >
-      {/* Efeito de grid luxuoso no fundo */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none overflow-hidden">
         <div 
           ref={bgRef}
@@ -79,7 +88,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         ></div>
       </div>
       
-      {/* Gradiente superior */}
       <div 
         className="absolute top-0 left-0 right-0 h-64 opacity-20 pointer-events-none"
         style={{ 
@@ -87,7 +95,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         }}
       ></div>
       
-      {/* Luz de destaque no canto */}
       <div 
         className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full opacity-[0.04] blur-3xl pointer-events-none"
         style={{ 
@@ -95,7 +102,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         }}
       ></div>
       
-      {/* Container para o conteúdo */}
       <div 
         className={`container mx-auto ${layout.maxWidth} ${layout.padding} relative z-10`}
         style={{ color: colors.text }}
@@ -105,7 +111,6 @@ export function VantaTemplate({ config }: VantaTemplateProps) {
         </div>
       </div>
       
-      {/* Estilo específico para esse template */}
       <style jsx global>{`
         .bg-grid-pattern {
           background-image: 
@@ -219,7 +224,6 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
         </p>
       </div>
       
-      {/* Indicador de scroll */}
       <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
         <div 
           className="w-[1px] h-10 relative overflow-hidden"
@@ -351,7 +355,6 @@ const ExperienceSection = ({ config }: { config: TemplateConfig }) => {
             key={index} 
             className="grid md:grid-cols-12 gap-10 relative"
           >
-            {/* Linha de conexão entre experiências */}
             {index < (data?.experiences || []).length - 1 && (
               <div 
                 className="absolute left-[40px] md:left-[50%] top-[90px] md:top-[30px] w-[1px] h-[calc(100%+4rem)] md:transform md:-translate-x-[50%] opacity-20 hidden md:block" 

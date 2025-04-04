@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { TemplateConfig } from '@/app/types/TemplateConfig';
+import { CustomSections } from '../common/CustomSections';
 
 interface ModernTemplateProps {
   config: TemplateConfig;
@@ -33,6 +34,16 @@ export function ModernTemplate({ config }: ModernTemplateProps) {
         return <EducationSection config={config} key={sectionId} />;
       case 'contact':
         return <ContactSection config={config} key={sectionId} />;
+      case 'custom':
+        return data?.customSections && Array.isArray(data.customSections) && data.customSections.length > 0 ? (
+          <div key={sectionId} className="py-12">
+            <CustomSections 
+              sections={data.customSections} 
+              className=""
+              config={config}
+            />
+          </div>
+        ) : null;
       default:
         return null;
     }
@@ -53,7 +64,6 @@ export function ModernTemplate({ config }: ModernTemplateProps) {
         background: `linear-gradient(135deg, ${colors.background}, ${colors.primary}30)`
       }}
     >
-      {/* Círculos decorativos característicos do design moderno */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" 
         style={{ 
           background: `radial-gradient(circle, ${colors.primary}, transparent 70%)`,
@@ -79,7 +89,6 @@ export function ModernTemplate({ config }: ModernTemplateProps) {
   );
 }
 
-// Versão temporária simplificada para demonstrar o funcionamento
 const HeaderSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
@@ -104,7 +113,6 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
   );
 };
 
-// Seções com estilo moderno
 const AboutSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   

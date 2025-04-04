@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { TemplateConfig } from '@/app/types/TemplateConfig';
+import { CustomSections } from '../common/CustomSections';
 
 interface CosmosTemplateProps {
   config: TemplateConfig;
@@ -12,7 +13,6 @@ export function CosmosTemplate({ config }: CosmosTemplateProps) {
   const planetsRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Efeito de parallax ao scroll
     const handleScroll = () => {
       if (starsRef.current) {
         starsRef.current.style.transform = `translateY(${window.scrollY * 0.2}px)`;
@@ -51,6 +51,22 @@ export function CosmosTemplate({ config }: CosmosTemplateProps) {
         return <EducationSection config={config} key={sectionId} />;
       case 'contact':
         return <ContactSection config={config} key={sectionId} />;
+      case 'custom':
+        return data?.customSections && Array.isArray(data.customSections) && data.customSections.length > 0 ? (
+          <section className="py-16 relative" key={sectionId}>
+            <div className="absolute w-24 h-24 rounded-full opacity-10 left-20 top-20" 
+              style={{ 
+                background: `radial-gradient(circle, ${colors.secondary}, transparent 70%)` 
+              }}
+            />
+            
+            <CustomSections 
+              sections={data.customSections} 
+              className=""
+              config={config}
+            />
+          </section>
+        ) : null;
       default:
         return null;
     }
@@ -567,7 +583,6 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
             key={idx} 
             className="relative"
           >
-            {/* Elemento orbital decorativo */}
             <div 
               className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full opacity-20"
               style={{ 
@@ -595,7 +610,6 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
                     boxShadow: `0 2px 10px ${colors.primary}20`
                   }}
                 >
-                  {/* Brilho de destaque */}
                   <div 
                     className="absolute -inset-px rounded-lg opacity-0 hover:opacity-100 transition-opacity"
                     style={{ 
@@ -666,7 +680,6 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
               boxShadow: `0 4px 15px ${colors.primary}20`
             }}
           >
-            {/* Elemento decorativo */}
             <div 
               className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full"
               style={{ 
@@ -710,7 +723,6 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
   );
 };
 
-// Seção de Contato com tema espacial
 const ContactSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   

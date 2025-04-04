@@ -1,10 +1,10 @@
-// frontend/src/app/preview-portfolio/components/templates/index.ts
-export { MinimalistTemplate } from './MinimalistTemplate';
-export { VantaTemplate } from './VantaTemplate';
-export { ProfessionalTemplate } from './ProfessionalTemplate';
-export { ModernTemplate } from './ModernTemplate';
-export { ZenithTemplate } from './ZenithTemplate';
-export { CosmosTemplate } from './CosmosTemplate';
-export { HyperionTemplate } from './HyperionTemplate';
-export { NebulaTemplate } from './NebulaTemplate';
+export { MinimalistTemplate } from './preview/MinimalistTemplate';
+export { VantaTemplate } from './preview/VantaTemplate';
+export { ProfessionalTemplate } from './preview/ProfessionalTemplate';
+export { ModernTemplate } from './preview/ModernTemplate';
+export { ZenithTemplate } from './preview/ZenithTemplate';
+export { CosmosTemplate } from './preview/CosmosTemplate';
+export { HyperionTemplate } from './preview/HyperionTemplate';
+export { NebulaTemplate } from './preview/NebulaTemplate';
+
 export { type TemplateType } from './types';

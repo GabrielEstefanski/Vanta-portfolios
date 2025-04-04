@@ -212,86 +212,143 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
   return (
-    <section className="min-h-[90vh] py-16 flex flex-col justify-center relative">
-      <div className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full opacity-10"
-        style={{ 
-          background: `radial-gradient(circle, ${colors.primary}, transparent)`,
-          filter: 'blur(40px)',
-          animation: 'pulse 10s infinite ease-in-out'
-        }}
-      />
-
-      <div className="mb-8 relative">
-        <h1 
-          className={`text-5xl md:text-7xl lg:text-8xl mb-6 ${typography.headingFont}`}
-          style={{ 
-            color: colors.text,
-            textShadow: `0 0 20px ${colors.primary}30`
-          }}
-        >
-          {data?.name || 'João da Silva'}
-        </h1>
+    <header className="py-20 relative overflow-hidden">
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between">
+        <div className="w-full md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+          <div 
+            className="nebula-heading mb-4 inline-block"
+            style={{
+              position: 'relative',
+              backgroundImage: `linear-gradient(90deg, ${colors.accent}, ${colors.primary})`,
+              WebkitBackgroundClip: 'text',
+              color: 'transparent',
+              fontSize: 'calc(2.5rem + 1vw)',
+              fontFamily: typography.headingFont,
+              lineHeight: '1.1',
+              textShadow: `0 0 40px ${colors.primary}50`
+            }}
+          >
+            {data?.name || 'Seu Nome'}
+          </div>
+          
+          <h2 
+            className="mb-6 text-xl relative overflow-hidden"
+            style={{
+              fontFamily: typography.bodyFont,
+              color: colors.secondary,
+              textShadow: `0 0 20px ${colors.secondary}40`
+            }}
+          >
+            <span className="relative z-10">{data?.title || 'Desenvolvedor Full Stack'}</span>
+            <span
+              className="absolute top-0 -right-full bottom-0 left-0 z-5 shimmer-effect"
+              style={{
+                background: `linear-gradient(90deg, ${colors.background}00 0%, ${colors.secondary}30 50%, ${colors.background}00 100%)`,
+                animation: 'shimmer 6s infinite',
+              }}
+            />
+          </h2>
+          
+          <p 
+            className="mb-8 text-lg"
+            style={{ 
+              fontFamily: typography.bodyFont,
+              color: `${colors.text}cc` 
+            }}
+          >
+            {data?.location || 'São Paulo, Brasil'}
+          </p>
+          
+          <div className="flex flex-wrap justify-center md:justify-start gap-4">
+            <a 
+              href={`mailto:${data?.email || 'exemplo@email.com'}`}
+              className="relative px-6 py-3 overflow-hidden group rounded-full"
+              style={{
+                background: `linear-gradient(90deg, ${colors.primary}80, ${colors.accent}80)`,
+                color: colors.text,
+                fontFamily: typography.bodyFont,
+                fontWeight: 'bold',
+                backdropFilter: 'blur(5px)',
+              }}
+            >
+              <span className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-out rounded-full opacity-0 group-hover:opacity-100" 
+                style={{
+                  background: `linear-gradient(90deg, ${colors.accent}, ${colors.primary})`,
+                }}
+              />
+              <span className="relative">Contato</span>
+            </a>
+            
+            <a 
+              href="#projects"
+              className="relative px-6 py-3 overflow-hidden group rounded-full"
+              style={{
+                background: `${colors.background}90`,
+                border: `1px solid ${colors.primary}50`,
+                color: colors.text,
+                fontFamily: typography.bodyFont,
+                fontWeight: 'bold',
+                backdropFilter: 'blur(5px)',
+              }}
+            >
+              <span className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-out rounded-full opacity-0 group-hover:opacity-30" 
+                style={{
+                  background: colors.primary,
+                }}
+              />
+              <span className="relative">Projetos</span>
+            </a>
+          </div>
+        </div>
         
-        <div 
-          className="h-1 w-32 md:w-48 mx-auto mb-6 rounded-full opacity-80"
-          style={{ 
-            background: `linear-gradient(to right, transparent, ${colors.primary}, ${colors.secondary}, transparent)`,
-            boxShadow: `0 0 8px ${colors.primary}80`
-          }}
-        />
-        
-        <h2 
-          className={`text-xl md:text-2xl lg:text-3xl mb-4 ${typography.bodyFont} tracking-wider`}
-          style={{ 
-            color: colors.secondary,
-            textShadow: `0 0 10px ${colors.secondary}30`
-          }}
-        >
-          {data?.title || 'Desenvolvedor Full Stack'}
-        </h2>
+        {(data?.showProfilePicture !== false) && (
+          <div 
+            className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden"
+            style={{
+              animation: 'float 6s ease-in-out infinite'
+            }}
+          >
+            <div className="absolute inset-0 rounded-full" style={{
+              background: `radial-gradient(circle at center, ${colors.accent}40, ${colors.primary}40)`,
+              filter: 'blur(15px)',
+              transform: 'scale(1.2)',
+              opacity: 0.8
+            }} />
+            
+            <div className="absolute inset-2 rounded-full overflow-hidden z-10 border-2" style={{
+              borderColor: `${colors.accent}40`,
+              boxShadow: `0 0 30px ${colors.primary}70`,
+            }}>
+              <img 
+                src={data?.profilePictureUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"} 
+                alt={data?.name || "Perfil"}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Efeito de brilho orbital */}
+            <div className="absolute inset-0 z-20">
+              <div 
+                className="w-full h-full animate-spin"
+                style={{ 
+                  animationDuration: '12s',
+                  animationTimingFunction: 'linear',
+                  animationIterationCount: 'infinite'
+                }}
+              >
+                <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full h-1">
+                  <div className="absolute right-0 w-4 h-4 rounded-full" style={{
+                    background: colors.accent,
+                    boxShadow: `0 0 20px 5px ${colors.accent}80`,
+                    filter: 'blur(1px)'
+                  }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      
-      <div className="max-w-2xl mx-auto text-center mb-12">
-        <p 
-          className="text-lg md:text-xl leading-relaxed"
-          style={{ color: `${colors.text}DD` }}
-        >
-          {data?.about || 'Desenvolvedor apaixonado por criar soluções web eficientes e experiências digitais incríveis.'}
-        </p>
-      </div>
-      
-      <div className="flex flex-wrap gap-6 justify-center">
-        <button 
-          className="px-8 py-3 rounded-full transition-all transform hover:scale-105 hover:shadow-lg focus:outline-none"
-          style={{ 
-            background: `linear-gradient(45deg, ${colors.primary}, ${colors.secondary})`,
-            color: colors.text,
-            boxShadow: `0 4px 15px ${colors.primary}40`
-          }}
-        >
-          Ver Projetos
-        </button>
-        
-        <button 
-          className="px-8 py-3 rounded-full border-2 transition-all transform hover:scale-105 hover:shadow-lg focus:outline-none"
-          style={{ 
-            borderColor: colors.primary,
-            color: colors.text,
-            background: `linear-gradient(45deg, ${colors.primary}10, ${colors.secondary}10)`,
-            boxShadow: `0 4px 15px ${colors.primary}20`
-          }}
-        >
-          Contato
-        </button>
-      </div>
-      
-      {/* Seta de scroll */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </div>
-    </section>
+    </header>
   );
 };
 

@@ -36,12 +36,15 @@ export interface Project {
   imageUrl?: string;
   liveUrl?: string;
   githubUrl?: string;
+  projectUrl?: string;
+  repoUrl?: string;
 }
 
 export interface Skill {
   name: string;
   level: number;
   category: string;
+  icon?: string;
 }
 
 export interface Education {
@@ -49,6 +52,7 @@ export interface Education {
   degree: string;
   period: string;
   description?: string;
+  certificateUrl?: string;
 }
 
 export interface Certificate {
@@ -58,6 +62,25 @@ export interface Certificate {
   link?: string;
 }
 
+export interface SocialLink {
+  platform: string;
+  url: string;
+  icon?: string;
+}
+
+export interface ProfilePictureOptions {
+  url: string;
+  shape: 'round' | 'square' | 'rounded';
+  size: 'small' | 'medium' | 'large';
+  border: boolean;
+  borderColor?: string;
+  effects?: {
+    shadow?: boolean;
+    glow?: boolean;
+    animation?: 'none' | 'pulse' | 'bounce' | 'float';
+  };
+}
+
 export interface PortfolioData {
   name: string;
   title: string;
@@ -65,11 +88,17 @@ export interface PortfolioData {
   email: string;
   phone: string;
   location: string;
+  showProfilePicture?: boolean;
+  profilePictureUrl?: string;
+  avatarUrl?: string;
+  profilePicture?: ProfilePictureOptions;
+  socialLinks?: SocialLink[];
   experiences: Experience[];
   projects: Project[];
   skills: Skill[];
   education?: Education[];
   certificates?: Certificate[];
+  customSections?: Record<string, any>;
 }
 
 export interface Typography {

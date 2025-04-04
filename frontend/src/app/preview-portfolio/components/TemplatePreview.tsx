@@ -26,7 +26,6 @@ export function TemplatePreview({ config }: TemplatePreviewProps) {
     );
   }
 
-  // Renderiza o componente específico baseado no ID do template
   switch (config.id) {
     case 'minimalist':
       return <MinimalistTemplate config={config} />;

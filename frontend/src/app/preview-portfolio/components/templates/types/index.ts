@@ -29,6 +29,10 @@ export interface Section {
   type: string;
   enabled: boolean;
   order: number;
+  isCustom?: boolean;
+  layout?: 'grid' | 'flex' | 'standard';
+  columns?: number;
+  gap?: string;
 }
 
 export interface Experience {
@@ -69,6 +73,36 @@ export interface Certificate {
   link?: string;
 }
 
+export interface CustomSection {
+  id: string;
+  title: string;
+  elements: CustomElement[];
+  layout: 'grid' | 'flex' | 'standard';
+  columns?: number;
+  gap?: string;
+}
+
+export interface CustomElement {
+  id: string;
+  type: 'card' | 'text' | 'image' | 'divider';
+  content: any;
+  styles?: Record<string, string>;
+}
+
+export interface CustomCard {
+  title: string;
+  subtitle?: string;
+  content: string;
+  imageUrl?: string;
+  links?: { label: string; url: string }[];
+}
+
+export interface CustomText {
+  content: string;
+  isHeading?: boolean;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
 export interface PortfolioData {
   name: string;
   title: string;
@@ -81,6 +115,7 @@ export interface PortfolioData {
   skills: Skill[];
   education?: Education[];
   certificates?: Certificate[];
+  customSections?: CustomSection[];
 }
 
 export interface TemplateProps {
