@@ -12,18 +12,18 @@ export function HyperionTemplate({ config }: HyperionTemplateProps) {
   const glowRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Efeito de parallax e movimento do grid de fundo
+    // Efeito de parallax e movimento do grid de fundo mais intenso
     const handleMouseMove = (e: MouseEvent) => {
       if (gridRef.current) {
         const x = e.clientX / window.innerWidth;
         const y = e.clientY / window.innerHeight;
-        gridRef.current.style.transform = `translate(${x * -15}px, ${y * -15}px)`;
+        gridRef.current.style.transform = `translate(${x * -30}px, ${y * -30}px) rotate(${x * y * 2}deg)`;
       }
       
       if (glowRef.current) {
         const x = e.clientX;
         const y = e.clientY;
-        glowRef.current.style.background = `radial-gradient(circle at ${x}px ${y}px, ${config.props.colors.primary}10, transparent 40%)`;
+        glowRef.current.style.background = `radial-gradient(circle at ${x}px ${y}px, ${config.props.colors.primary}30, transparent 60%)`;
       }
     };
 
@@ -73,60 +73,113 @@ export function HyperionTemplate({ config }: HyperionTemplateProps) {
       className="min-h-screen transition-all duration-300 relative overflow-hidden"
       style={{ 
         backgroundColor: colors.background,
-        color: colors.text
+        color: colors.text,
+        backgroundImage: `radial-gradient(circle at 30% 20%, ${colors.primary}10, transparent 25%), 
+                          radial-gradient(circle at 80% 70%, ${colors.accent}10, transparent 25%)`
       }}
     >
-      {/* Grid futurista de fundo */}
+      {/* Grade futurista aprimorada */}
       <div 
         ref={gridRef}
         className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
-        style={{ opacity: 0.07 }}
+        style={{ opacity: 0.12 }}
       >
         <div className="absolute inset-0" 
           style={{ 
             backgroundImage: `
-              linear-gradient(to right, ${colors.primary}20 1px, transparent 1px),
-              linear-gradient(to bottom, ${colors.primary}20 1px, transparent 1px)
+              linear-gradient(to right, ${colors.primary}30 1px, transparent 1px),
+              linear-gradient(to bottom, ${colors.primary}30 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
+            backgroundSize: '30px 30px'
           }}
         />
         
-        {/* Linhas angulares */}
+        {/* Linhas angulares mais complexas */}
         <div className="absolute inset-0" 
           style={{ 
             backgroundImage: `
-              linear-gradient(45deg, ${colors.secondary}10 25%, transparent 25%, transparent 50%, ${colors.secondary}10 50%, ${colors.secondary}10 75%, transparent 75%, transparent)
+              linear-gradient(45deg, ${colors.secondary}15 25%, transparent 25%, transparent 50%, ${colors.secondary}15 50%, ${colors.secondary}15 75%, transparent 75%, transparent),
+              linear-gradient(-45deg, ${colors.primary}10 15%, transparent 15%, transparent 30%, ${colors.primary}10 30%, ${colors.primary}10 45%, transparent 45%)
             `,
-            backgroundSize: '100px 100px'
+            backgroundSize: '80px 80px, 120px 120px'
+          }}
+        />
+
+        {/* Círculos tech espalhados */}
+        <div className="absolute h-20 w-20 rounded-full top-[10%] left-[20%] opacity-20"
+          style={{ 
+            border: `2px solid ${colors.primary}`,
+            boxShadow: `0 0 20px ${colors.primary}50`,
+            animation: 'pulse 7s infinite alternate'
+          }}
+        />
+        <div className="absolute h-40 w-40 rounded-full top-[60%] left-[80%] opacity-10"
+          style={{ 
+            border: `3px solid ${colors.accent}`,
+            boxShadow: `0 0 30px ${colors.accent}50`,
+            animation: 'pulse 9s infinite alternate-reverse'
+          }}
+        />
+        <div className="absolute h-16 w-16 top-[30%] left-[60%]"
+          style={{ 
+            opacity: 0.15,
+            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+            border: `1px solid ${colors.primary}`,
+            boxShadow: `0 0 15px ${colors.primary}50`,
+            animation: 'pulse 5s infinite alternate'
           }}
         />
       </div>
       
-      {/* Efeito de brilho que segue o cursor */}
+      {/* Efeito de brilho aprimorado */}
       <div 
         ref={glowRef}
         className="fixed inset-0 z-0 pointer-events-none"
       />
       
-      {/* Elementos angulares decorativos */}
-      <div className="fixed top-0 right-0 h-80 w-80 opacity-10 z-0 transform rotate-45" 
+      {/* Elementos decorativos angulares ampliados */}
+      <div className="fixed top-0 right-0 h-96 w-96 z-0 transform rotate-45" 
         style={{ 
-          borderRight: `2px solid ${colors.primary}`,
-          borderBottom: `2px solid ${colors.primary}`,
-          transform: 'translate(20%, -20%) rotate(45deg)'
+          opacity: 0.15,
+          borderRight: `3px solid ${colors.primary}`,
+          borderBottom: `3px solid ${colors.primary}`,
+          transform: 'translate(20%, -20%) rotate(45deg)',
+          boxShadow: `0 0 50px ${colors.primary}20`,
+          animation: 'pulse 10s infinite'
         }}
       />
       
-      <div className="fixed bottom-0 left-0 h-96 w-96 opacity-10 z-0" 
+      <div className="fixed bottom-0 left-0 h-96 w-96 z-0" 
         style={{ 
-          borderLeft: `2px solid ${colors.accent}`,
-          borderTop: `2px solid ${colors.accent}`,
-          transform: 'translate(-20%, 20%) rotate(45deg)'
+          opacity: 0.15,
+          borderLeft: `3px solid ${colors.accent}`,
+          borderTop: `3px solid ${colors.accent}`,
+          transform: 'translate(-20%, 20%) rotate(45deg)',
+          boxShadow: `0 0 50px ${colors.accent}20`,
+          animation: 'pulse 8s infinite alternate'
         }}
       />
+
+      <div className="fixed left-10 top-1/3 opacity-20 z-0 whitespace-nowrap font-mono text-xs overflow-hidden h-60"
+        style={{ 
+          color: colors.primary,
+          writingMode: 'vertical-rl',
+          animation: 'scrollText 20s linear infinite'
+        }}
+      >
+        <div>{`<div className="cyber">`}</div>
+        <div>{`<header>PORTFOLIO</header>`}</div>
+        <div>{`function render() {`}</div>
+        <div>{`  return <Component />;`}</div>
+        <div>{`}`}</div>
+        <div>{`const data = [0, 1, 0, 1, 0, 1];`}</div>
+        <div>{`@keyframes pulse {`}</div>
+        <div>{`  0% { opacity: 0; }`}</div>
+        <div>{`  100% { opacity: 1; }`}</div>
+        <div>{`}`}</div>
+        <div>{`</div>`}</div>
+      </div>
       
-      {/* Container para o conteúdo */}
       <div 
         className={`container mx-auto ${layout.maxWidth} ${layout.padding} relative`}
         style={{ zIndex: 1 }}
@@ -136,17 +189,37 @@ export function HyperionTemplate({ config }: HyperionTemplateProps) {
         </div>
       </div>
       
-      {/* Estilos para animações */}
+      {/* HUD Elements */}
+      <div className="fixed top-5 left-5 opacity-40 z-10 pointer-events-none">
+        <div className="text-xs font-mono flex items-center gap-2"
+          style={{ color: colors.primary }}
+        >
+          <div className="h-2 w-2 rounded-full animate-pulse"
+            style={{ backgroundColor: colors.primary }}
+          ></div>
+          SYSTEM ONLINE • {new Date().getFullYear()}
+        </div>
+      </div>
+      
+      <div className="fixed bottom-5 right-5 opacity-40 z-10 pointer-events-none">
+        <div className="text-xs font-mono"
+          style={{ color: colors.primary }}
+        >
+          QUANTUM_INTERFACE v3.7
+        </div>
+      </div>
+      
+      {/* Estilos para animações aprimoradas */}
       <style jsx global>{`
         @keyframes pulse {
-          0% { opacity: 0.8; }
+          0% { opacity: 0.6; }
           50% { opacity: 1; }
-          100% { opacity: 0.8; }
+          100% { opacity: 0.6; }
         }
         
         @keyframes glow {
           0% { box-shadow: 0 0 5px ${colors.primary}50; }
-          50% { box-shadow: 0 0 20px ${colors.primary}80; }
+          50% { box-shadow: 0 0 30px ${colors.primary}90; }
           100% { box-shadow: 0 0 5px ${colors.primary}50; }
         }
         
@@ -154,42 +227,94 @@ export function HyperionTemplate({ config }: HyperionTemplateProps) {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
+        
+        @keyframes scrollText {
+          0% { transform: translateY(100%); }
+          100% { transform: translateY(-100%); }
+        }
+        
+        @keyframes blinkBorder {
+          0%, 100% { border-color: ${colors.primary}00; }
+          50% { border-color: ${colors.primary}; }
+        }
+        
+        @keyframes scan {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        
+        @keyframes rotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
       `}</style>
     </div>
   );
 }
 
-// Componente de Header com estilo Hyperion
+// Componente de Header com estilo Hyperion aprimorado
 const HeaderSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
   return (
     <section className="min-h-[90vh] py-16 flex items-center relative">
+      {/* Efeito de escaneamento */}
+      <div className="absolute inset-x-0 h-px z-10 opacity-70"
+        style={{ 
+          background: `linear-gradient(to right, transparent, ${colors.primary}, ${colors.accent}, transparent)`,
+          boxShadow: `0 0 10px ${colors.primary}, 0 0 20px ${colors.primary}`,
+          animation: 'scan 8s linear infinite'
+        }}
+      />
+      
       <div className="w-full">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            {/* Tag decorativa */}
+            {/* Tag decorativa avançada */}
             <div 
-              className="inline-block px-4 py-1 mb-6 text-sm tracking-wider"
+              className="inline-block px-4 py-1 mb-6 text-sm tracking-wider relative overflow-hidden"
               style={{ 
                 background: `linear-gradient(90deg, ${colors.primary}, ${colors.secondary})`,
                 color: colors.text,
                 clipPath: 'polygon(0 0, 100% 0, 95% 100%, 5% 100%)'
               }}
             >
-              PORTFOLIO
+              <span className="relative z-10">PORTFOLIO</span>
+              {/* Efeito de escaneamento dentro da tag */}
+              <div className="absolute inset-0 w-20 opacity-70"
+                style={{ 
+                  background: `linear-gradient(90deg, transparent, ${colors.text}40, transparent)`,
+                  transform: 'skewX(-20deg)',
+                  animation: 'shimmer 3s linear infinite'
+                }}
+              />
             </div>
             
             <h1 
-              className={`text-5xl md:text-6xl lg:text-7xl mb-6 ${typography.headingFont} tracking-tight leading-none`}
+              className={`text-5xl md:text-6xl lg:text-7xl mb-6 ${typography.headingFont} tracking-tight leading-none text-cyberpunk relative`}
               style={{ color: colors.text }}
             >
               <div className="relative">
                 <span className="relative z-10">{data?.name || 'João da Silva'}</span>
                 <div 
-                  className="absolute -bottom-2 left-0 h-3 w-1/3"
-                  style={{ backgroundColor: colors.primary, opacity: 0.3 }}
+                  className="absolute -bottom-2 -left-2 h-3 w-1/3"
+                  style={{ backgroundColor: colors.primary, opacity: 0.5 }}
                 />
+                {/* Efeito de glitch no nome */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-90 z-20 pointer-events-none">
+                  <div 
+                    className="absolute inset-0 opacity-0"
+                    style={{ 
+                      color: colors.accent,
+                      animation: 'glitch 3s infinite',
+                      textShadow: `2px 0 ${colors.primary}, -2px 0 ${colors.accent}`,
+                      clipPath: 'inset(50% 0 50% 0)',
+                      transform: 'translateX(-2px)'
+                    }}
+                  >
+                    {data?.name || 'João da Silva'}
+                  </div>
+                </div>
               </div>
             </h1>
             
@@ -207,6 +332,15 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
                   background: `linear-gradient(to right, ${colors.accent}, transparent)` 
                 }}
               />
+              {/* Decoração digital na posição */}
+              <div className="absolute -right-10 top-1/2 w-8 h-8 opacity-80"
+                style={{ 
+                  border: `1px solid ${colors.primary}`,
+                  borderRadius: '2px',
+                  transform: 'rotate(45deg) translateY(-50%)',
+                  animation: 'pulse 4s infinite alternate'
+                }}
+              />
             </h2>
             
             <p className="max-w-xl text-lg mb-10 leading-relaxed">
@@ -215,14 +349,21 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
             
             <div className="flex flex-wrap gap-4">
               <button 
-                className="px-6 py-3 transition-all transform hover:translate-y-[-2px] focus:outline-none relative overflow-hidden"
+                className="px-6 py-3 transition-all transform hover:translate-y-[-2px] focus:outline-none relative overflow-hidden group"
                 style={{ 
                   backgroundColor: colors.primary,
                   color: colors.text,
-                  clipPath: 'polygon(0 0, 100% 0, 95% 100%, 5% 100%)',
+                  clipPath: 'polygon(0 0, 100% 0, 92% 100%, 8% 100%)',
                 }}
               >
-                <span className="relative z-10">Meus Projetos</span>
+                <span className="relative z-10 group-hover:text-white transition-colors">Meus Projetos</span>
+                {/* Glowing line on hover */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ 
+                    background: `linear-gradient(45deg, ${colors.primary}, ${colors.accent})`,
+                  }}
+                />
                 <div 
                   className="absolute inset-0 opacity-20"
                   style={{ 
@@ -230,46 +371,72 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
                     backgroundSize: '5px 5px'
                   }}
                 />
+                {/* Tech corner */}
+                <div className="absolute h-3 w-3 right-0 bottom-0 opacity-80"
+                  style={{ 
+                    backgroundColor: colors.accent,
+                    clipPath: 'polygon(100% 0, 100% 100%, 0 100%)'
+                  }}
+                />
               </button>
               
               <button 
-                className="px-6 py-3 transition-all transform hover:translate-y-[-2px] focus:outline-none relative overflow-hidden"
+                className="px-6 py-3 transition-all transform hover:translate-y-[-2px] focus:outline-none relative overflow-hidden group"
                 style={{ 
                   backgroundColor: 'transparent',
                   color: colors.text,
-                  boxShadow: `inset 0 0 0 1px ${colors.primary}`,
-                  clipPath: 'polygon(0 0, 100% 0, 95% 100%, 5% 100%)'
+                  boxShadow: `inset 0 0 0 1.5px ${colors.primary}`,
+                  clipPath: 'polygon(0 0, 100% 0, 92% 100%, 8% 100%)'
                 }}
               >
                 <span className="relative z-10">Contato</span>
                 <div 
-                  className="absolute -inset-px scale-x-0 transition-transform origin-left hover:scale-x-100"
+                  className="absolute -inset-px scale-x-0 transition-transform origin-left group-hover:scale-x-100 duration-300"
                   style={{ 
-                    background: `linear-gradient(90deg, ${colors.primary}30, ${colors.primary}10)`,
-                    transitionDuration: '0.5s' 
+                    background: `linear-gradient(90deg, ${colors.primary}40, ${colors.primary}10)`,
+                  }}
+                />
+                {/* Scanning line */}
+                <div 
+                  className="absolute top-0 bottom-0 w-10 opacity-30 -left-20 group-hover:left-full transition-all duration-1000"
+                  style={{ 
+                    background: `linear-gradient(90deg, transparent, ${colors.text}, transparent)`,
+                    transform: 'skewX(-20deg)'
                   }}
                 />
               </button>
             </div>
+            
+            {/* Tech digital decorations */}
+            <div className="mt-12 pt-4 border-t flex items-center gap-2 opacity-60"
+              style={{ borderColor: `${colors.primary}30` }}
+            >
+              {[...Array(5)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="h-1 bg-current"
+                  style={{ 
+                    width: `${12 + i * 5}px`,
+                    backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+                    animation: `pulse ${2 + i * 0.5}s infinite alternate`
+                  }}
+                />
+              ))}
+              <span className="ml-2 text-xs font-mono" style={{ color: colors.primary }}>
+                SYSTEM.STATUS: ONLINE
+              </span>
+            </div>
           </div>
           
           <div className="relative">
-            {/* Decoração em hexágono */}
+            {/* Frame hexagonal futurista para a foto */}
             <div 
               className="aspect-square relative max-w-md mx-auto"
               style={{ 
                 clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
               }}
             >
-              <div 
-                className="absolute inset-2 z-10"
-                style={{ 
-                  backgroundColor: colors.surface || colors.background,
-                  clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                  boxShadow: `0 0 10px ${colors.primary}50 inset`
-                }}
-              />
-              
+              {/* Camada de brilho */}
               <div 
                 className="absolute inset-0"
                 style={{ 
@@ -278,38 +445,117 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
                 }}
               />
               
-              <div className="absolute inset-4 flex items-center justify-center bg-gray-800 z-20"
+              {/* Camada interna com pattern */}
+              <div 
+                className="absolute inset-2 z-10"
+                style={{ 
+                  backgroundColor: colors.surface || colors.background,
+                  clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                  boxShadow: `0 0 15px ${colors.primary}60 inset`,
+                  backgroundImage: `radial-gradient(${colors.primary}20 1px, transparent 1px)`,
+                  backgroundSize: '10px 10px'
+                }}
+              />
+              
+              {/* Contenedor da foto */}
+              <div className="absolute inset-8 flex items-center justify-center bg-gray-800 z-20"
+                style={{ 
+                  clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                  backgroundImage: data?.profilePictureUrl ? `url(${data.profilePictureUrl})` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
+              >
+                {!data?.profilePictureUrl && (
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-gray-400 text-sm">Foto do Perfil</span>
+                    <div className="mt-4 w-16 h-16 border-2 border-dashed rounded-full flex items-center justify-center"
+                      style={{ borderColor: `${colors.primary}60` }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Efeito de escaneamento na foto */}
+              <div 
+                className="absolute inset-8 z-30 pointer-events-none overflow-hidden"
                 style={{ 
                   clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
                 }}
               >
-                <span className="text-gray-400">Foto</span>
+                <div 
+                  className="absolute inset-x-0 h-20 bg-gradient-to-b from-transparent via-white to-transparent opacity-10"
+                  style={{ 
+                    animation: 'scan 3s linear infinite'
+                  }}
+                ></div>
               </div>
               
-              {/* Linhas angulares decorativas */}
-              {[...Array(3)].map((_, i) => (
+              {/* Linhas hexagonais decorativas */}
+              {[...Array(4)].map((_, i) => (
                 <div 
                   key={i}
                   className="absolute inset-0 opacity-30"
                   style={{ 
-                    border: `2px solid ${colors.primary}`,
+                    border: `1.5px solid ${i % 2 === 0 ? colors.primary : colors.accent}`,
                     clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                    transform: `scale(${1.1 + i * 0.1})`,
-                    transition: 'all 0.5s',
-                    animation: `pulse ${3 + i * 0.5}s infinite alternate`
+                    transform: `scale(${1.05 + i * 0.08})`,
+                    animation: `pulse ${3 + i * 0.7}s infinite alternate`
+                  }}
+                />
+              ))}
+              
+              {/* Pontos de conexão */}
+              {[0, 60, 120, 180, 240, 300].map((angle, i) => (
+                <div 
+                  key={i}
+                  className="absolute w-3 h-3 rounded-full z-20"
+                  style={{ 
+                    backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+                    top: `calc(50% - 1.5px)`,
+                    left: `calc(50% - 1.5px)`,
+                    transform: `rotate(${angle}deg) translate(${i % 2 === 0 ? 105 : 115}px)`,
+                    boxShadow: `0 0 10px ${i % 2 === 0 ? colors.primary : colors.accent}`,
+                    animation: `pulse ${2 + i * 0.3}s infinite alternate`
                   }}
                 />
               ))}
             </div>
             
-            {/* Elemento decorativo angular */}
-            <div 
-              className="absolute -bottom-8 -right-8 w-16 h-16 opacity-80"
+            {/* Elementos tech decorativos */}
+            <div className="absolute -top-6 -right-6 w-12 h-12 opacity-80 flex items-center justify-center"
               style={{ 
-                borderRight: `2px solid ${colors.primary}`, 
-                borderBottom: `2px solid ${colors.primary}`
+                border: `1.5px solid ${colors.primary}`,
+                transform: 'rotate(45deg)',
+                animation: 'pulse 3s infinite alternate'
+              }}
+            >
+              <div className="w-6 h-6"
+                style={{
+                  border: `1.5px solid ${colors.accent}`,
+                  animation: 'rotate 10s linear infinite'
+                }}
+              />
+            </div>
+            
+            <div className="absolute -bottom-8 -left-8 w-20 h-3 opacity-70"
+              style={{ 
+                background: `linear-gradient(90deg, ${colors.accent}, transparent)`,
+                animation: 'pulse 5s infinite alternate'
               }}
             />
+            
+            {/* Tech data lines */}
+            <div className="absolute bottom-10 right-0 opacity-60 font-mono text-xs"
+              style={{ color: colors.primary }}
+            >
+              <div className="text-right mb-1">SYS.ID: {(Math.random() * 10000).toFixed(0).padStart(4, '0')}</div>
+              <div className="text-right">HEX: {colors.primary.replace('#', '')}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1296,33 +1542,37 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
               
               <div className="mt-8">
                 <h4 
-                  className={`text-lg mb-4 ${typography.headingFont}`}
+                  className={`text-lg mb-4 ${typography.headingFont} col-span-2`}
                   style={{ color: colors.text }}
                 >
                   Redes Sociais
                 </h4>
                 
-                <div className="flex gap-3">
-                  {[
-                    { label: "LI", name: "LinkedIn" },
-                    { label: "GH", name: "GitHub" },
-                    { label: "TW", name: "Twitter" },
-                    { label: "IG", name: "Instagram" }
-                  ].map((social, idx) => (
-                    <a 
-                      key={idx}
-                      href="#" 
-                      className="w-10 h-10 flex items-center justify-center transition-transform hover:scale-110"
-                      style={{ 
-                        backgroundColor: `${colors.primary}20`,
-                        border: `1px solid ${colors.primary}40`,
-                        clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
-                      }}
-                      title={social.name}
-                    >
-                      <span className="text-xs">{social.label}</span>
-                    </a>
-                  ))}
+                <div className="flex flex-wrap gap-3">
+                  {data?.socialMedia && Object.entries(data.socialMedia)
+                    .filter(([_, url]) => url && url.trim() !== '')
+                    .map(([platform, url]) => (
+                      <a 
+                        key={platform}
+                        href={url as string}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 flex items-center justify-center transition-transform hover:scale-110 group"
+                        style={{ 
+                          backgroundColor: `${colors.primary}20`,
+                          border: `1px solid ${colors.primary}40`,
+                          clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+                        }}
+                        title={platform}
+                      >
+                        <span className="text-xs group-hover:text-white transition-colors" 
+                          style={{ color: colors.secondary }}
+                        >
+                          {getSocialIcon(platform)}
+                        </span>
+                      </a>
+                    ))
+                  }
                 </div>
               </div>
             </div>
@@ -1497,4 +1747,33 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
       </div>
     </section>
   );
+};
+
+// Função auxiliar para obter ícones de redes sociais
+const getSocialIcon = (platform: string): string => {
+  platform = platform.toLowerCase();
+  
+  switch (platform) {
+    case 'linkedin':
+      return 'LI';
+    case 'github':
+      return 'GH';
+    case 'twitter':
+    case 'x':
+      return 'TW';
+    case 'instagram':
+      return 'IG';
+    case 'facebook':
+      return 'FB';
+    case 'youtube':
+      return 'YT';
+    case 'medium':
+      return 'MD';
+    case 'dribbble':
+      return 'DR';
+    case 'behance':
+      return 'BE';
+    default:
+      return platform.substring(0, 2).toUpperCase();
+  }
 }; 

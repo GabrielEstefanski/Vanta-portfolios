@@ -50,36 +50,125 @@ export function ZenithTemplate({ config }: ZenithTemplateProps) {
       className="min-h-screen transition-all duration-500 relative overflow-hidden"
       style={{ 
         backgroundColor: colors.background,
-        color: colors.text
+        color: colors.text,
+        // Adicionar gradiente sutil ao fundo
+        backgroundImage: `
+          radial-gradient(circle at 20% 30%, ${colors.primary}05, transparent 20%),
+          radial-gradient(circle at 80% 70%, ${colors.accent}05, transparent 20%)
+        `
       }}
     >
-      {/* Elementos decorativos */}
-      <div className="absolute right-0 top-0 w-1/3 h-1/3 opacity-5">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      {/* Sol no Zenith (ponto mais alto do céu) */}
+      <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[400px] opacity-10 pointer-events-none">
+        <div 
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3/4 w-[600px] h-[600px] rounded-full"
+          style={{ 
+            background: `radial-gradient(circle, ${colors.primary}40, transparent 70%)`,
+            boxShadow: `0 0 100px ${colors.primary}30`
+          }}
+        />
+        
+        {/* Raios solares */}
+        {[...Array(24)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute top-0 left-1/2 h-1 origin-bottom"
+            style={{ 
+              width: '300px',
+              backgroundColor: `${colors.primary}20`,
+              transform: `translateX(-50%) rotate(${i * 15}deg)`,
+              opacity: Math.random() * 0.3 + 0.1
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Elementos decorativos celestiais aprimorados */}
+      <div className="fixed right-0 top-0 w-full h-64 opacity-10 pointer-events-none">
+        <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
           <path 
             fill={colors.primary} 
-            d="M47.7,-51.9C59.3,-42.1,64.8,-24.1,63.2,-8.1C61.7,7.9,53.1,21.8,41.5,32.4C29.9,43,15.4,50.2,-0.7,51C-16.9,51.8,-33.7,46.3,-45.9,35.5C-58.1,24.8,-65.6,8.8,-64.2,-6.7C-62.8,-22.2,-52.6,-37.3,-39.4,-47.1C-26.3,-56.9,-10.1,-61.4,4.2,-66.2C18.5,-70.9,36.1,-61.8,47.7,-51.9Z" 
-            transform="translate(100 100)" 
+            d="M0,64 C100,42 200,0 300,0 C400,0 500,42 600,64 C700,85 800,64 800,64 L800,0 L0,0 Z" 
           />
         </svg>
       </div>
       
-      <div className="absolute left-0 bottom-0 w-1/4 h-1/4 opacity-5">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <div className="fixed left-0 top-40 w-full h-32 opacity-5 pointer-events-none">
+        <svg viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
           <path 
             fill={colors.accent} 
-            d="M53.7,-67.1C65.8,-53.6,69.4,-32.6,70.7,-12.8C72,7.1,70.9,26,61.3,38.6C51.7,51.2,33.6,57.5,14.5,63.3C-4.7,69.1,-24.9,74.4,-40.4,68.1C-55.9,61.8,-66.7,43.9,-71.6,25.2C-76.4,6.4,-75.4,-13.3,-67.6,-29C-59.7,-44.7,-45,-56.6,-30.1,-68.3C-15.2,-80.1,-0.1,-91.7,11,-87.2C22.1,-82.7,41.6,-80.6,53.7,-67.1Z" 
-            transform="translate(100 100)" 
+            d="M0,32 C50,16 150,48 200,32 C250,16 300,0 400,0 C500,0 550,16 600,32 C650,48 750,16 800,32 L800,100 L0,100 Z" 
           />
         </svg>
       </div>
+      
+      {/* Estrelas fixas no fundo */}
+      {[...Array(50)].map((_, i) => (
+        <div 
+          key={i}
+          className="fixed rounded-full animate-pulse pointer-events-none"
+          style={{ 
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            backgroundColor: i % 3 === 0 ? colors.primary : i % 3 === 1 ? colors.accent : colors.secondary,
+            opacity: Math.random() * 0.4 + 0.1,
+            animationDuration: `${Math.random() * 5 + 2}s`
+          }}
+        />
+      ))}
+      
+      {/* Nuvens celestiais estilizadas */}
+      <div className="fixed -right-20 top-1/4 w-80 h-32 opacity-5 pointer-events-none"
+           style={{ background: `radial-gradient(ellipse, ${colors.primary}30, transparent 70%)` }}></div>
+      <div className="fixed -left-40 top-2/3 w-96 h-24 opacity-5 pointer-events-none"
+           style={{ background: `radial-gradient(ellipse, ${colors.accent}30, transparent 70%)` }}></div>
       
       {/* Container para o conteúdo */}
       <div 
         className={`container mx-auto ${layout.maxWidth} ${layout.padding} relative z-10`}
       >
+        {/* Linha celestial horizontal superior */}
+        <div 
+          className="w-full h-px mb-12 opacity-20"
+          style={{ 
+            background: `linear-gradient(90deg, transparent, ${colors.primary}, transparent)`,
+            boxShadow: `0 0 10px ${colors.primary}50`
+          }}
+        />
+        
         <div className={layout.spacing}>
           {orderedSections.map(sectionId => renderSection(sectionId))}
+        </div>
+        
+        {/* Linha celestial horizontal inferior */}
+        <div 
+          className="w-full h-px mt-12 opacity-20"
+          style={{ 
+            background: `linear-gradient(90deg, transparent, ${colors.primary}, transparent)`,
+            boxShadow: `0 0 10px ${colors.primary}50`
+          }}
+        />
+        
+        {/* Footer celestial simples */}
+        <div className="text-center py-8 opacity-70 text-sm">
+          <p>© {new Date().getFullYear()} - Tocando o céu com seu portfólio</p>
+          <div 
+            className="w-12 h-12 mx-auto mt-4 opacity-30 relative"
+            style={{ 
+              border: `1px solid ${colors.primary}`,
+              borderRadius: '50%',
+              boxShadow: `0 0 10px ${colors.primary}30`
+            }}
+          >
+            <div 
+              className="absolute inset-3 rounded-full"
+              style={{ 
+                background: `radial-gradient(circle, ${colors.primary}, transparent 80%)` 
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -90,21 +179,116 @@ export function ZenithTemplate({ config }: ZenithTemplateProps) {
 const HeaderSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
+  // Usar socialLinks da estrutura correta de dados
+  const socialLinks = data?.socialLinks || [];
+  const hasSocialLinks = socialLinks.length > 0;
+  
+  // Função para obter o ícone baseado na plataforma
+  const getSocialIcon = (platform: string) => {
+    const icons: {[key: string]: string} = {
+      github: '🌟',
+      linkedin: '💼',
+      twitter: '📢',
+      instagram: '📸',
+      facebook: '👥',
+      youtube: '🎬',
+      dribbble: '🎨',
+      behance: '🖼️',
+      medium: '📝',
+      website: '🌐'
+    };
+    return icons[platform.toLowerCase()] || '🔗';
+  };
+  
   return (
-    <section className="py-12 md:py-24 flex flex-col items-center text-center relative">
-      {/* Elemento decorativo sutil atrás do header */}
+    <section className="py-16 md:py-28 flex flex-col items-center text-center relative">
+      {/* Elementos decorativos celestiais aprimorados */}
       <div 
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full opacity-5"
-        style={{ background: `radial-gradient(circle, ${colors.primary}, transparent 70%)` }}
-      ></div>
+        className="absolute top-0 right-0 left-0 h-full opacity-5 overflow-hidden"
+        style={{ background: `linear-gradient(180deg, ${colors.primary}20 0%, transparent 100%)` }}
+      >
+        {/* Sol no zênite (ponto mais alto do céu) */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 rounded-full opacity-30"
+             style={{ background: `radial-gradient(circle, ${colors.primary}60, transparent 70%)` }}></div>
+        
+        {/* Estrelas e pequenos pontos luminosos */}
+        {[...Array(20)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full animate-pulse"
+            style={{ 
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
+              backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+              opacity: Math.random() * 0.5 + 0.2,
+              animationDuration: `${Math.random() * 3 + 2}s`
+            }}
+          />
+        ))}
+        
+        {/* Nuvens estilizadas */}
+        <div className="absolute -top-20 left-1/4 w-72 h-24 opacity-20"
+             style={{ background: `radial-gradient(ellipse, ${colors.primary}40, transparent 70%)` }}></div>
+        <div className="absolute top-40 right-1/3 w-48 h-16 opacity-15"
+             style={{ background: `radial-gradient(ellipse, ${colors.accent}40, transparent 70%)` }}></div>
+      </div>
       
-      <div className="w-20 h-1 mb-12 rounded-full" style={{ backgroundColor: colors.primary }}></div>
+      {/* Foto do perfil (se existir) com melhor integração */}
+      {data?.profilePictureUrl && (
+        <div className="mb-10 relative">
+          {/* Aura em volta da foto */}
+          <div className="absolute inset-0 rounded-full opacity-50 animate-pulse"
+               style={{ 
+                 background: `radial-gradient(circle, ${colors.primary}40, transparent 70%)`,
+                 transform: 'scale(1.3)'
+               }}></div>
+          
+          {/* Raios solares decorativos */}
+          {[...Array(12)].map((_, i) => (
+            <div 
+              key={i}
+              className="absolute top-1/2 left-1/2 h-1 opacity-30"
+              style={{ 
+                width: '60px',
+                backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+                transform: `translate(-50%, -50%) rotate(${i * 30}deg) translateX(40px)`,
+              }}
+            />
+          ))}
+          
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden ring-4 relative z-10"
+               style={{ 
+                 ringColor: colors.primary,
+                 boxShadow: `0 0 20px ${colors.primary}50`
+               }}>
+            <img 
+              src={data.profilePictureUrl} 
+              alt={data?.name || 'Perfil'} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+      
+      <div className="w-20 h-1 mb-10 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       
       <h1 
-        className={`text-4xl md:text-5xl lg:text-6xl mb-6 ${typography.headingFont}`}
+        className={`text-4xl md:text-5xl lg:text-6xl mb-6 ${typography.headingFont} relative`}
         style={{ color: colors.primary }}
       >
-        {data?.name || 'João da Silva'}
+        {/* Efeito de brilho no nome */}
+        <span className="relative">
+          {data?.name || 'João da Silva'}
+          <div 
+            className="absolute -bottom-2 left-0 right-0 h-1 opacity-50 rounded-full"
+            style={{ 
+              background: `linear-gradient(90deg, transparent, ${colors.primary}, transparent)`,
+              boxShadow: `0 0 10px ${colors.primary}` 
+            }}
+          />
+        </span>
       </h1>
       
       <h2 
@@ -120,24 +304,71 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
       
       <div className="flex space-x-6">
         <button 
-          className="px-8 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 shadow-sm"
+          className="px-8 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 shadow-lg relative overflow-hidden group"
           style={{ 
             backgroundColor: colors.primary, 
             color: colors.background
           }}
         >
-          Meu Trabalho
+          <span className="relative z-10">Meu Trabalho</span>
+          {/* Efeito de brilho no hover */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity"
+            style={{ 
+              background: `radial-gradient(circle at center, white, transparent 70%)` 
+            }}
+          />
         </button>
         <button 
-          className="px-8 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 border-2"
+          className="px-8 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 border-2 relative overflow-hidden group"
           style={{ 
             borderColor: colors.primary,
             color: colors.primary
           }}
         >
-          Contato
+          <span className="relative z-10">Contato</span>
+          {/* Efeito de brilho no hover */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"
+            style={{ 
+              background: colors.primary
+            }}
+          />
         </button>
       </div>
+      
+      {/* Redes sociais */}
+      {hasSocialLinks && (
+        <div className="mt-12 flex items-center justify-center space-x-4">
+          {socialLinks.map((social, index) => (
+            <a 
+              key={social.platform}
+              href={social.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:shadow-lg relative overflow-hidden group"
+              style={{ 
+                backgroundColor: `${colors.primary}15`,
+                color: colors.primary
+              }}
+              aria-label={social.platform}
+            >
+              <span className="relative z-10">{getSocialIcon(social.platform)}</span>
+              {/* Efeito de brilho no hover */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity"
+                style={{ 
+                  background: `radial-gradient(circle at center, ${colors.primary}, transparent 70%)` 
+                }}
+              />
+            </a>
+          ))}
+        </div>
+      )}
+      
+      {/* Elemento decorativo inferior - horizonte */}
+      <div className="absolute bottom-0 left-0 right-0 h-12 opacity-10"
+           style={{ background: `linear-gradient(to top, ${colors.primary}30, transparent)` }}></div>
     </section>
   );
 };
@@ -145,20 +376,54 @@ const HeaderSection = ({ config }: { config: TemplateConfig }) => {
 const AboutSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
+  // Verificar se existe foto de perfil
+  const hasProfilePicture = !!data?.profilePictureUrl;
+  
   return (
     <section className="py-20 relative">
+      {/* Elementos celestiais decorativos */}
+      <div className="absolute top-20 right-10 w-64 h-64 rounded-full opacity-5"
+           style={{ background: `radial-gradient(circle, ${colors.primary}50, transparent 70%)` }}></div>
+           
+      <div className="absolute bottom-10 left-20 w-40 h-40 rounded-full opacity-5"
+           style={{ background: `radial-gradient(circle, ${colors.accent}50, transparent 70%)` }}></div>
+      
+      {/* Estrelas espalhadas */}
+      {[...Array(10)].map((_, i) => (
+        <div 
+          key={i}
+          className="absolute rounded-full animate-pulse"
+          style={{ 
+            top: `${20 + Math.random() * 60}%`,
+            left: `${Math.random() * 100}%`,
+            width: `${Math.random() * 5 + 2}px`,
+            height: `${Math.random() * 5 + 2}px`,
+            backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+            opacity: Math.random() * 0.3 + 0.1,
+            animationDuration: `${Math.random() * 4 + 3}s`
+          }}
+        />
+      ))}
+      
       <div className="flex flex-col md:flex-row items-center gap-16">
         <div className="md:w-1/2 order-2 md:order-1">
           <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
           <h2 
-            className={`text-3xl mb-8 ${typography.headingFont}`} 
+            className={`text-3xl mb-8 ${typography.headingFont} relative inline-block`} 
             style={{ color: colors.primary }}
           >
             Sobre Mim
+            {/* Decoração estilo Zenith */}
+            <div 
+              className="absolute -bottom-2 left-0 right-0 h-0.5 opacity-50"
+              style={{ 
+                background: `linear-gradient(to right, ${colors.primary}, transparent)` 
+              }}
+            />
           </h2>
           
           <div className="space-y-4">
-            <p>
+            <p className="relative">
               {data?.about || 'Com mais de 5 anos de experiência em desenvolvimento web, tenho trabalhado com as mais variadas tecnologias para criar produtos digitais de alto impacto.'}
             </p>
             <p>
@@ -166,39 +431,96 @@ const AboutSection = ({ config }: { config: TemplateConfig }) => {
             </p>
           </div>
           
+          {/* Skills tags com efeitos celestiais */}
           <div className="mt-10 flex flex-wrap gap-3">
-            {['Inovador', 'Criativo', 'Analítico', 'Proativo', 'Adaptável'].map(trait => (
+            {(['Inovador', 'Criativo', 'Analítico', 'Proativo', 'Adaptável']).map((trait, index) => (
               <span 
                 key={trait} 
-                className="px-4 py-2 rounded-md inline-block text-sm transition-colors"
+                className="px-4 py-2 rounded-md inline-block text-sm transition-all hover:transform hover:scale-105 relative overflow-hidden group"
                 style={{ 
-                  background: colors.background, 
+                  background: `${colors.primary}10`, 
                   border: `1px solid ${colors.border}`,
-                  color: colors.text
+                  color: colors.primary
                 }}
               >
                 {trait}
+                {/* Efeito de brilho no hover */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
+                  style={{ 
+                    background: `radial-gradient(circle at center, ${colors.primary}, transparent 70%)` 
+                  }}
+                />
               </span>
             ))}
           </div>
         </div>
         
         <div className="md:w-1/2 order-1 md:order-2 relative">
-          <div 
-            className="absolute inset-0 rounded-2xl opacity-5"
-            style={{ 
-              background: `linear-gradient(135deg, ${colors.primary}, ${colors.accent})`,
-              transform: 'rotate(2deg) scale(0.95)'
-            }}
-          ></div>
-          <div 
-            className="relative aspect-square max-w-sm mx-auto overflow-hidden rounded-2xl border"
-            style={{ borderColor: colors.border }}
-          >
-            <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-              <span className="text-gray-500">Foto</span>
+          {hasProfilePicture ? (
+            <div className="relative">
+              {/* Raios solares emanando da foto */}
+              {[...Array(12)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="absolute top-1/2 left-1/2 h-1 opacity-10"
+                  style={{ 
+                    width: '100px',
+                    backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+                    transform: `translate(-50%, -50%) rotate(${i * 30}deg) translateX(70%)`,
+                  }}
+                />
+              ))}
+              
+              {/* Elemento decorativo atrás da foto - aura */}
+              <div 
+                className="absolute inset-0 rounded-2xl opacity-20"
+                style={{ 
+                  background: `radial-gradient(circle, ${colors.primary}50, ${colors.accent}20)`,
+                  transform: 'scale(1.1)'
+                }}
+              ></div>
+              
+              <div 
+                className="relative aspect-square max-w-sm mx-auto overflow-hidden rounded-2xl border shadow-lg"
+                style={{ 
+                  borderColor: colors.border,
+                  boxShadow: `0 5px 20px ${colors.primary}30`
+                }}
+              >
+                <img 
+                  src={data.profilePictureUrl} 
+                  alt={data?.name || 'Perfil'} 
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Overlay de brilho suave */}
+                <div 
+                  className="absolute inset-0 opacity-10"
+                  style={{ 
+                    background: `linear-gradient(45deg, ${colors.primary}50, transparent, ${colors.accent}30)` 
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div 
+              className="relative aspect-square max-w-sm mx-auto overflow-hidden rounded-2xl border"
+              style={{ borderColor: colors.border }}
+            >
+              <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-500">Foto</span>
+              </div>
+              
+              {/* Overlay gradiente mesmo sem foto */}
+              <div 
+                className="absolute inset-0 opacity-10"
+                style={{ 
+                  background: `linear-gradient(45deg, ${colors.primary}50, transparent, ${colors.accent}30)` 
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -209,7 +531,17 @@ const ExperienceSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
+      {/* Elementos decorativos de céu */}
+      <div className="absolute top-0 left-1/4 w-64 h-40 opacity-5">
+        <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            fill={colors.primary}
+            d="M0,25 Q25,0 50,25 T100,25 L100,50 L0,50 Z" 
+          />
+        </svg>
+      </div>
+      
       <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       <h2 
         className={`text-3xl mb-12 ${typography.headingFont}`} 
@@ -229,9 +561,8 @@ const ExperienceSection = ({ config }: { config: TemplateConfig }) => {
                 <div 
                   className="mb-4 inline-block px-4 py-1 rounded-full text-sm shadow-sm"
                   style={{ 
-                    backgroundColor: colors.background, 
-                    border: `1px solid ${colors.border}`,
-                    color: colors.text
+                    backgroundColor: `${colors.primary}10`, 
+                    color: colors.primary
                   }}
                 >
                   {exp.startDate} - {exp.endDate}
@@ -264,11 +595,13 @@ const ExperienceSection = ({ config }: { config: TemplateConfig }) => {
               </div>
             </div>
             
-            {/* Linha decorativa entre itens, exceto o último */}
+            {/* Linha decorativa entre itens com gradiente - aparência de horizonte */}
             {index < (data?.experiences?.length || 1) - 1 && (
               <div 
                 className="absolute bottom-0 left-0 right-0 h-px mt-8 opacity-20 translate-y-8"
-                style={{ backgroundColor: colors.text }}
+                style={{ 
+                  background: `linear-gradient(to right, transparent, ${colors.primary}, transparent)` 
+                }}
               ></div>
             )}
           </div>
@@ -281,9 +614,8 @@ const ExperienceSection = ({ config }: { config: TemplateConfig }) => {
                 <div 
                   className="mb-4 inline-block px-4 py-1 rounded-full text-sm shadow-sm"
                   style={{ 
-                    backgroundColor: colors.background, 
-                    border: `1px solid ${colors.border}`,
-                    color: colors.text
+                    backgroundColor: `${colors.primary}10`, 
+                    color: colors.primary
                   }}
                 >
                   2021 - Presente
@@ -328,7 +660,18 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
+      {/* Elementos decorativos de céu - nuvens estilizadas */}
+      <div className="absolute -right-10 top-10 w-40 h-20 opacity-5"
+           style={{ background: `radial-gradient(ellipse, ${colors.primary}40, transparent 70%)` }}></div>
+      <div className="absolute -right-20 top-20 w-60 h-20 opacity-5"
+           style={{ background: `radial-gradient(ellipse, ${colors.primary}40, transparent 70%)` }}></div>
+      
+      <div className="absolute -left-10 bottom-40 w-32 h-16 opacity-5"
+           style={{ background: `radial-gradient(ellipse, ${colors.accent}40, transparent 70%)` }}></div>
+      <div className="absolute -left-20 bottom-60 w-48 h-16 opacity-5"
+           style={{ background: `radial-gradient(ellipse, ${colors.accent}40, transparent 70%)` }}></div>
+           
       <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       <h2 
         className={`text-3xl mb-12 ${typography.headingFont}`} 
@@ -343,7 +686,7 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
             key={index} 
             className="group"
           >
-            <div className="overflow-hidden rounded-xl mb-6 aspect-video relative">
+            <div className="overflow-hidden rounded-xl mb-6 aspect-video relative shadow-lg">
               {project.imageUrl ? (
                 <img 
                   src={project.imageUrl} 
@@ -356,14 +699,17 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
                 </div>
               )}
               
+              {/* Overlay com gradiente celestial */}
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-                style={{ backgroundColor: `${colors.primary}90` }}
+                style={{ 
+                  background: `linear-gradient(135deg, ${colors.primary}90, ${colors.accent}80)` 
+                }}
               >
                 <div className="flex space-x-4">
                   <a 
                     href={project.liveUrl || '#'} 
-                    className="p-3 rounded-full transform transition-transform hover:scale-110"
+                    className="p-3 rounded-full transform transition-transform hover:scale-110 shadow-md"
                     style={{ backgroundColor: colors.background }}
                     aria-label="Ver projeto"
                   >
@@ -374,7 +720,7 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
                   </a>
                   <a 
                     href={project.githubUrl || '#'} 
-                    className="p-3 rounded-full transform transition-transform hover:scale-110"
+                    className="p-3 rounded-full transform transition-transform hover:scale-110 shadow-md"
                     style={{ backgroundColor: colors.background }}
                     aria-label="Ver código"
                   >
@@ -412,8 +758,13 @@ const ProjectsSection = ({ config }: { config: TemplateConfig }) => {
         
         {!data?.projects?.length && (
           <div className="group">
-            <div className="overflow-hidden rounded-xl mb-6 aspect-video relative">
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <div className="overflow-hidden rounded-xl mb-6 aspect-video relative shadow-lg">
+              <div 
+                className="w-full h-full flex items-center justify-center"
+                style={{ 
+                  background: `linear-gradient(to bottom right, ${colors.primary}10, ${colors.accent}10)` 
+                }}
+              >
                 <span className="text-gray-500">Imagem do Projeto</span>
               </div>
             </div>
@@ -459,10 +810,16 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
     }
     acc[category].push(skill);
     return acc;
-  }, {} as Record<string, typeof data.skills>);
+  }, {} as Record<string, any>);
   
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
+      {/* Elementos decorativos de céu */}
+      <div className="absolute -right-20 top-1/4 w-64 h-64 rounded-full opacity-5"
+           style={{ background: `radial-gradient(circle, ${colors.primary}40, transparent 70%)` }}></div>
+      <div className="absolute -left-20 bottom-1/4 w-40 h-40 rounded-full opacity-5"
+           style={{ background: `radial-gradient(circle, ${colors.accent}40, transparent 70%)` }}></div>
+      
       <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       <h2 
         className={`text-3xl mb-12 ${typography.headingFont}`} 
@@ -482,7 +839,7 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
                 {category}
               </h3>
               <div className="grid md:grid-cols-2 gap-6">
-                {skills.map((skill, idx) => (
+                {skills.map((skill: any, idx: number) => (
                   <div key={idx} className="space-y-2">
                     <div className="flex justify-between">
                       <span className={`${typography.bodyFont}`}>{skill.name}</span>
@@ -495,7 +852,7 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
                     </div>
                     <div 
                       className="h-2 w-full rounded-full overflow-hidden bg-opacity-10"
-                      style={{ backgroundColor: colors.text + '10' }}
+                      style={{ backgroundColor: `${colors.text}10` }}
                     >
                       <div 
                         className="h-full rounded-full"
@@ -516,8 +873,11 @@ const SkillsSection = ({ config }: { config: TemplateConfig }) => {
           {['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'TailwindCSS'].map(skill => (
             <div 
               key={skill} 
-              className="p-6 rounded-lg border-2 text-center transition-all hover:-translate-y-1"
-              style={{ borderColor: colors.border }}
+              className="p-6 rounded-lg border-2 text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+              style={{ 
+                borderColor: colors.border,
+                background: `linear-gradient(145deg, ${colors.background}, ${colors.primary}05)`
+              }}
             >
               <div 
                 className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center"
@@ -541,7 +901,11 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
+      {/* Elemento decorativo de céu */}
+      <div className="absolute left-0 right-0 top-0 h-24 opacity-5"
+           style={{ background: `linear-gradient(180deg, ${colors.primary}20, transparent)` }}></div>
+      
       <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       <h2 
         className={`text-3xl mb-12 ${typography.headingFont}`} 
@@ -553,12 +917,12 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
       <div className="space-y-12">
         {(data?.education || []).map((edu, index) => (
           <div key={index} className="relative pl-8 group">
-            {/* Elemento visual na timeline */}
+            {/* Elemento visual na timeline - estrela */}
             <div 
-              className="absolute left-0 top-0 w-4 h-4 rounded-full border-2 group-hover:scale-125 transition-transform"
+              className="absolute left-0 top-0 w-4 h-4 rotate-45 group-hover:scale-125 transition-transform"
               style={{ 
-                backgroundColor: colors.background,
-                borderColor: colors.primary
+                backgroundColor: colors.primary,
+                boxShadow: `0 0 10px ${colors.primary}50`
               }}
             ></div>
             
@@ -566,7 +930,9 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
             {index < (data?.education?.length || 1) - 1 && (
               <div 
                 className="absolute left-2 top-4 bottom-0 w-px -mb-8"
-                style={{ backgroundColor: colors.border }}
+                style={{ 
+                  background: `linear-gradient(to bottom, ${colors.primary}, ${colors.accent}20)` 
+                }}
               ></div>
             )}
             
@@ -580,9 +946,8 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
               <div 
                 className="px-3 py-1 text-sm rounded-full"
                 style={{ 
-                  backgroundColor: colors.background, 
-                  border: `1px solid ${colors.border}`,
-                  color: colors.text
+                  backgroundColor: `${colors.primary}10`, 
+                  color: colors.primary
                 }}
               >
                 {edu.period}
@@ -603,10 +968,10 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
         {!data?.education?.length && (
           <div className="relative pl-8 group">
             <div 
-              className="absolute left-0 top-0 w-4 h-4 rounded-full border-2 group-hover:scale-125 transition-transform"
+              className="absolute left-0 top-0 w-4 h-4 rotate-45 group-hover:scale-125 transition-transform"
               style={{ 
-                backgroundColor: colors.background,
-                borderColor: colors.primary
+                backgroundColor: colors.primary,
+                boxShadow: `0 0 10px ${colors.primary}50`
               }}
             ></div>
             
@@ -620,9 +985,8 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
               <div 
                 className="px-3 py-1 text-sm rounded-full"
                 style={{ 
-                  backgroundColor: colors.background, 
-                  border: `1px solid ${colors.border}`,
-                  color: colors.text
+                  backgroundColor: `${colors.primary}10`, 
+                  color: colors.primary
                 }}
               >
                 2015 - 2019
@@ -649,14 +1013,78 @@ const EducationSection = ({ config }: { config: TemplateConfig }) => {
 const ContactSection = ({ config }: { config: TemplateConfig }) => {
   const { colors, typography, data } = config.props;
   
+  // Usar a estrutura correta de dados para redes sociais
+  const socialLinks = data?.socialLinks || [];
+  const hasSocialLinks = socialLinks.length > 0;
+  
+  // Função para obter o ícone baseado na plataforma
+  const getSocialIcon = (platform: string) => {
+    const icons: {[key: string]: string} = {
+      github: '🌟',
+      linkedin: '💼',
+      twitter: '📢',
+      instagram: '📸',
+      facebook: '👥',
+      youtube: '🎬',
+      dribbble: '🎨',
+      behance: '🖼️',
+      medium: '📝',
+      website: '🌐'
+    };
+    return icons[platform.toLowerCase()] || '🔗';
+  };
+  
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
+      {/* Elementos decorativos celestiais */}
+      <div className="absolute top-0 right-0 w-full h-40 opacity-5">
+        <svg viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            fill={colors.primary} 
+            d="M0,20 C150,60 350,0 500,30 C650,60 750,30 800,20 L800,0 L0,0 Z" 
+          />
+        </svg>
+      </div>
+      
+      <div className="absolute bottom-0 left-0 w-full h-32 opacity-5">
+        <svg viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            fill={colors.accent} 
+            d="M0,80 C150,30 350,100 500,70 C650,40 750,80 800,90 L800,100 L0,100 Z" 
+          />
+        </svg>
+      </div>
+      
+      {/* Estrelas decorativas */}
+      {[...Array(15)].map((_, i) => (
+        <div 
+          key={i}
+          className="absolute rounded-full animate-pulse"
+          style={{ 
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            width: `${Math.random() * 4 + 2}px`,
+            height: `${Math.random() * 4 + 2}px`,
+            backgroundColor: i % 2 === 0 ? colors.primary : colors.accent,
+            opacity: Math.random() * 0.3 + 0.1,
+            animationDuration: `${Math.random() * 4 + 2}s`
+          }}
+        />
+      ))}
+      
       <div className="w-20 h-1 mb-8 rounded-full" style={{ backgroundColor: colors.primary }}></div>
       <h2 
-        className={`text-3xl mb-12 ${typography.headingFont}`} 
+        className={`text-3xl mb-12 ${typography.headingFont} relative inline-block`} 
         style={{ color: colors.primary }}
       >
         Contato
+        {/* Sublinhado estilo celestial */}
+        <div 
+          className="absolute -bottom-2 left-0 right-0 h-0.5 opacity-50"
+          style={{ 
+            background: `linear-gradient(to right, ${colors.primary}, transparent)` 
+          }}
+        />
       </h2>
       
       <div className="grid md:grid-cols-2 gap-16">
@@ -673,12 +1101,13 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
           </p>
           
           <div className="space-y-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 group">
               <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
                 style={{ 
                   background: `linear-gradient(135deg, ${colors.primary}20, ${colors.primary}05)`,
-                  color: colors.primary
+                  color: colors.primary,
+                  boxShadow: `0 0 10px ${colors.primary}20`
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -690,7 +1119,7 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
                 <p className="text-sm opacity-70 mb-1">Email</p>
                 <a 
                   href={`mailto:${data?.email || 'joao@exemplo.com'}`} 
-                  className="text-lg hover:underline"
+                  className="text-lg hover:underline transition-all"
                   style={{ color: colors.accent }}
                 >
                   {data?.email || 'joao@exemplo.com'}
@@ -698,12 +1127,13 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 group">
               <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
                 style={{ 
                   background: `linear-gradient(135deg, ${colors.primary}20, ${colors.primary}05)`,
-                  color: colors.primary
+                  color: colors.primary,
+                  boxShadow: `0 0 10px ${colors.primary}20`
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -714,7 +1144,7 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
                 <p className="text-sm opacity-70 mb-1">Telefone</p>
                 <a 
                   href={`tel:${data?.phone || '(11) 98765-4321'}`} 
-                  className="text-lg hover:underline"
+                  className="text-lg hover:underline transition-all"
                   style={{ color: colors.accent }}
                 >
                   {data?.phone || '(11) 98765-4321'}
@@ -722,12 +1152,13 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 group">
               <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
                 style={{ 
                   background: `linear-gradient(135deg, ${colors.primary}20, ${colors.primary}05)`,
-                  color: colors.primary
+                  color: colors.primary,
+                  boxShadow: `0 0 10px ${colors.primary}20`
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -743,27 +1174,75 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
             </div>
           </div>
           
-          <div className="mt-10 flex space-x-5">
-            {['github', 'linkedin', 'twitter', 'instagram'].map(social => (
-              <a 
-                href="#" 
-                key={social} 
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors border-2"
-                style={{ 
-                  borderColor: colors.border,
-                  color: colors.primary
-                }}
-                aria-label={`Link para ${social}`}
-              >
-                <span>{social.charAt(0).toUpperCase()}</span>
-              </a>
-            ))}
-          </div>
+          {/* Redes sociais */}
+          {hasSocialLinks ? (
+            <div className="mt-10 flex flex-wrap gap-3">
+              {socialLinks.map((social) => (
+                <a 
+                  key={social.platform}
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 relative overflow-hidden group"
+                  style={{ 
+                    borderColor: colors.border,
+                    color: colors.primary,
+                    backgroundColor: `${colors.primary}10`,
+                    boxShadow: `0 0 10px ${colors.primary}20`
+                  }}
+                  aria-label={social.platform}
+                >
+                  <span className="relative z-10">{getSocialIcon(social.platform)}</span>
+                  {/* Efeito de brilho celestial no hover */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity"
+                    style={{ 
+                      background: `radial-gradient(circle at center, ${colors.primary}80, transparent 70%)` 
+                    }}
+                  />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-10 flex space-x-5">
+              {['github', 'linkedin', 'twitter', 'instagram'].map(social => (
+                <a 
+                  href="#" 
+                  key={social} 
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 relative overflow-hidden group"
+                  style={{ 
+                    borderColor: colors.border,
+                    color: colors.primary,
+                    backgroundColor: `${colors.primary}10`,
+                    boxShadow: `0 0 10px ${colors.primary}20`
+                  }}
+                  aria-label={`Link para ${social}`}
+                >
+                  <span className="relative z-10">{social.charAt(0).toUpperCase()}</span>
+                  {/* Efeito de brilho celestial no hover */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity"
+                    style={{ 
+                      background: `radial-gradient(circle at center, ${colors.primary}80, transparent 70%)` 
+                    }}
+                  />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
         
         <div>
-          <form className="space-y-6">
-            <div>
+          <form className="space-y-6 relative">
+            {/* Fundo com gradiente suave */}
+            <div 
+              className="absolute inset-0 rounded-xl opacity-5"
+              style={{ 
+                background: `linear-gradient(135deg, ${colors.primary}50, ${colors.accent}30)` 
+              }}
+            />
+            
+            <div className="relative">
               <label 
                 className={`block text-sm mb-2 ${typography.bodyFont}`}
                 style={{ color: colors.text }}
@@ -772,13 +1251,17 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
               </label>
               <input 
                 type="text" 
-                className="w-full p-3 rounded-lg bg-transparent border-2 transition-colors focus:outline-none"
-                style={{ borderColor: colors.border }}
+                className="w-full p-3 rounded-lg bg-transparent border-2 transition-all focus:outline-none focus:shadow-md"
+                style={{ 
+                  borderColor: colors.border,
+                  boxShadow: `0 0 0 transparent`,
+                  transition: 'box-shadow 0.3s ease'
+                }}
                 placeholder="Seu nome"
                 disabled
               />
             </div>
-            <div>
+            <div className="relative">
               <label 
                 className={`block text-sm mb-2 ${typography.bodyFont}`}
                 style={{ color: colors.text }}
@@ -787,13 +1270,17 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
               </label>
               <input 
                 type="email" 
-                className="w-full p-3 rounded-lg bg-transparent border-2 transition-colors focus:outline-none"
-                style={{ borderColor: colors.border }}
+                className="w-full p-3 rounded-lg bg-transparent border-2 transition-all focus:outline-none focus:shadow-md"
+                style={{ 
+                  borderColor: colors.border,
+                  boxShadow: `0 0 0 transparent`,
+                  transition: 'box-shadow 0.3s ease'
+                }}
                 placeholder="Seu email"
                 disabled
               />
             </div>
-            <div>
+            <div className="relative">
               <label 
                 className={`block text-sm mb-2 ${typography.bodyFont}`}
                 style={{ color: colors.text }}
@@ -801,8 +1288,12 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
                 Mensagem
               </label>
               <textarea 
-                className="w-full p-3 rounded-lg bg-transparent border-2 transition-colors focus:outline-none resize-none"
-                style={{ borderColor: colors.border }}
+                className="w-full p-3 rounded-lg bg-transparent border-2 transition-all focus:outline-none focus:shadow-md resize-none"
+                style={{ 
+                  borderColor: colors.border,
+                  boxShadow: `0 0 0 transparent`,
+                  transition: 'box-shadow 0.3s ease'
+                }}
                 rows={5}
                 placeholder="Sua mensagem"
                 disabled
@@ -810,14 +1301,21 @@ const ContactSection = ({ config }: { config: TemplateConfig }) => {
             </div>
             <button 
               type="button"
-              className="px-6 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2"
+              className="px-6 py-3 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 relative overflow-hidden group"
               style={{ 
                 backgroundColor: colors.primary, 
                 color: colors.background
               }}
               disabled
             >
-              Enviar Mensagem
+              <span className="relative z-10">Enviar Mensagem</span>
+              {/* Efeito de brilho no hover */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity"
+                style={{ 
+                  background: `radial-gradient(circle at center, white, transparent 70%)` 
+                }}
+              />
             </button>
           </form>
         </div>

@@ -7,12 +7,14 @@ export default function Header() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <span className="text-xl font-light tracking-wider text-white">
-                VANTA
-              </span>
+              <img 
+                src="/vantaimg.png" 
+                alt="VANTA"
+                className="h-20"
+              />
             </div>
             <div className="hidden sm:ml-12 sm:block">
-              <div className="flex space-x-8">
+              <div className="flex space-x-8 mt-4">
                 <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm tracking-wider">
                   HOME
                 </a>

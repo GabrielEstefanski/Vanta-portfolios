@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Vanta - Portfólios Elegantes",
   description: "Crie seu portfólio profissional em minutos",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
